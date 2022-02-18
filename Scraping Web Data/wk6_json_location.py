@@ -3,7 +3,7 @@ import json
 # import ssl
 
 api_key = False
-#If you have a Google Places API key, enter it here
+# If you have a Google Places API key, enter it here
 # api_key = 'AIzaSy___IDByT70'
 # https://developers.google.com/maps/documentation/geocoding/intro
 
@@ -28,7 +28,7 @@ while True:
     url = serviceurl + urllib.parse.urlencode(parms)
 
     print('Retrieving', url)
-    uh = urllib.request.urlopen(url, context=ctx)
+    uh = urllib.request.urlopen(url)
     data = uh.read().decode()
     print('Retrieved', len(data), 'characters')
 
@@ -42,10 +42,12 @@ while True:
         print(data)
         continue
 
-    print(json.dumps(js, indent=4))
+    # print(json.dumps(js, indent=4))
 
-    lat = js['results'][0]['geometry']['location']['lat']
-    lng = js['results'][0]['geometry']['location']['lng']
-    print('lat', lat, 'lng', lng)
-    location = js['results'][0]['formatted_address']
-    print(location)
+    # lat = js['results'][0]['geometry']['location']['lat']
+    # lng = js['results'][0]['geometry']['location']['lng']
+    # print('lat', lat, 'lng', lng)
+    # location = js['results'][0]['formatted_address']
+    # print(location)
+
+    print("Place ID: ",js['results'][0]['place_id'])
