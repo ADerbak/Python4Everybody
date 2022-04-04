@@ -64,11 +64,12 @@ for entry in all:
     count = lookup(entry, 'Play Count')
     rating = lookup(entry, 'Rating')
     length = lookup(entry, 'Total Time')
+    genre = lookup(entry, 'Genre')
 
-    if name is None or artist is None or album is None : 
+    if name is None or artist is None or album is None or genre is None: 
         continue
 
-    print(name, artist, album, count, rating, length)
+    print(name, artist, album, count, rating, length, genre)
 
     cur.execute('''INSERT OR IGNORE INTO Artist (name) 
         VALUES ( ? )''', ( artist, ) )
@@ -79,10 +80,15 @@ for entry in all:
         VALUES ( ?, ? )''', ( album, artist_id ) )
     cur.execute('SELECT id FROM Album WHERE title = ? ', (album, ))
     album_id = cur.fetchone()[0]
+    
+    cur.execute('''INSERT OR IGNORE INTO Genre (name) 
+        VALUES ( ? )''', ( genre, ) )
+    cur.execute('SELECT id FROM Genre WHERE name = ? ', (genre, ))
+    genre_id = cur.fetchone()[0]
 
     cur.execute('''INSERT OR REPLACE INTO Track
-        (title, album_id, len, rating, count) 
-        VALUES ( ?, ?, ?, ?, ? )''', 
-        ( name, album_id, length, rating, count ) )
+        (title, album_id, len, rating, genre_id, count) 
+        VALUES ( ?, ?, ?, ?, ?, ? )''', 
+        ( name, album_id, length, rating, genre_id, count ) )
 
     conn.commit()
