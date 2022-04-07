@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 *.iml
 *.xml
+*.sqlite
 # C extensions
 *.so
 .idea/
